@@ -46,7 +46,7 @@ config_secret_common = json.loads(config_secret_common_str)
 #   해당하는 value를 SECRET_KEY변수에 할당
 SECRET_KEY = config_secret_common['django']['secret_key']
 
-# Facebook
+# # Facebook
 # FACEBOOK_APP_ID = config_secret_common['facebook']['app_id']
 # FACEBOOK_APP_SECRET_CODE = config_secret_common['facebook']['secret_code']
 # FACEBOOK_SCOPE = [
@@ -62,6 +62,20 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'member.User'
 LOGIN_URL = 'member:login'
+# 기본 인증 백엔드에 페이스북 인증 백엔드를 추가함
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'member.backends.FacebookBackend',
+]
+
+
+# DRF
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
 
 # Application definition
 

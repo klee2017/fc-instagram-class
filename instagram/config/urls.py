@@ -35,7 +35,7 @@ from . import views
 #   urls/__init__.py에서 맨 위 설명과 같은 방식이 되도록 각 모듈을 include처리
 
 from post.apis import PostList
-from member.apis import Login
+from member.apis import Login, Signup, FacebookLogin
 
 urlpatterns = [
     # Django admin
@@ -47,6 +47,8 @@ urlpatterns = [
 
     url(r'^api/post/$', PostList.as_view(), name='api-post'),
     url(r'^api/member/login/$', Login.as_view(), name='api-login'),
+    url(r'^api/member/signup/$', Signup.as_view(), name='api-signup'),
+    url(r'^api/member/facebook-login/$', FacebookLogin.as_view(), name='api-facebook-login'),
 ]
 urlpatterns += static(
     settings.MEDIA_URL,
