@@ -19,8 +19,6 @@ class SignupSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
 
-    # token = serializers.SerializerMethodField()
-
     class Meta:
         model = User
         fields = (
@@ -30,7 +28,6 @@ class SignupSerializer(serializers.ModelSerializer):
             'password1',
             'password2',
             'age',
-            'token',
         )
 
     def validate(self, data):
@@ -45,6 +42,17 @@ class SignupSerializer(serializers.ModelSerializer):
             img_profile=validated_data.get('img_profile'),
             age=validated_data['age'],
         )
+
+    def to_representation(self, instance):
+        # serializer된 형태를 결정
+        # super().to_representation()은 serialize된 기본 형태(dict)
+        ret = super().to_representation(instance)
+        data = {
+            'user': ret,
+            'token': instance.token,
+        }
+        # 마지막엔 serializer.data를 출력했을 때 반환될 값을 반환해줘야 함
+        return data
 
         # @staticmethod
         # def get_token(obj):
