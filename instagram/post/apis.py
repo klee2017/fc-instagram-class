@@ -35,7 +35,7 @@ class PostLikeToggle(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         instance = self.get_object()
         user = request.user
-        if instance in user.like_posts.all(pk=instance.pk):
+        if instance in user.like_posts.filter(pk=instance.pk):
             user.like_posts.remove(instance)
             like_status = False
         else:
