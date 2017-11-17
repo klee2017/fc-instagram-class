@@ -3,9 +3,6 @@
 .config_secret/
 sms.py
 
-# Front Code
-/front/
-
 # Created by https://www.gitignore.io/api/linux,macos,python,django,pycharm
 
 ### Django ###
@@ -230,3 +227,7 @@ venv.bak/
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# EB ignore
+!.config_secret/
+!/front/

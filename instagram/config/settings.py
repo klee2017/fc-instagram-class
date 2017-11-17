@@ -20,11 +20,15 @@ ROOT_DIR = os.path.dirname(BASE_DIR)
 CONFIG_SECRET_DIR = os.path.join(ROOT_DIR, '.config_secret')
 
 # instagram_project/instagram/media/
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
 MEDIA_URL = '/media/'
+
+STATIC_ROOT = os.path.join(ROOT_DIR, '.static_root')
+
 # instagram_project/instagram/static/
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
 # STATIC_URL로의 요청은 STATICFILES_DIRS경로의 목록에서 파일을 찾아 리턴
 STATICFILES_DIRS = [
     STATIC_DIR,
@@ -47,18 +51,23 @@ config_secret_common = json.loads(config_secret_common_str)
 SECRET_KEY = config_secret_common['django']['secret_key']
 
 # # Facebook
-# FACEBOOK_APP_ID = config_secret_common['facebook']['app_id']
-# FACEBOOK_APP_SECRET_CODE = config_secret_common['facebook']['secret_code']
-# FACEBOOK_SCOPE = [
-#     'user_friends',
-#     'public_profile',
-#     'email',
-# ]
+FACEBOOK_APP_ID = config_secret_common['facebook']['app_id']
+FACEBOOK_APP_SECRET_CODE = config_secret_common['facebook']['secret_code']
+FACEBOOK_SCOPE = [
+    'user_friends',
+    'public_profile',
+    'email',
+]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '.elasticbeanstalk.com',
+    'localhost',
+    '127.0.0.1',
+    'api.locomoco.co.kr',
+]
 
 AUTH_USER_MODEL = 'member.User'
 LOGIN_URL = 'member:login'
@@ -67,7 +76,6 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'member.backends.FacebookBackend',
 ]
-
 
 # DRF
 REST_FRAMEWORK = {
@@ -108,6 +116,8 @@ MIDDLEWARE = [
 ]
 CORS_ORIGIN_WHITELIST = (
     'localhost:3001',
+    'front.localhost:8013',
+    'locomoco.co.kr',
 )
 
 ROOT_URLCONF = 'config.urls'
@@ -136,7 +146,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 # 여기 채워주세요
-DATABASES = config_secret_common['django']['databases']
+# DATABASES = config_secret_common['django']['databases']
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
