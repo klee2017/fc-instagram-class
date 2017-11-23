@@ -20,7 +20,7 @@ User = get_user_model()
 
 class PostListViewTest(APILiveServerTestCase):
     URL_API_POST_LIST_NAME = 'post-list'
-    URL_API_POST_LIST = '/api/post/'
+    URL_API_POST_LIST = 'api:post:post-list'
     VIEW_CLASS = PostList
 
     @staticmethod
